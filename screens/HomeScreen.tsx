@@ -1,22 +1,16 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
+import WorkoutItem from "../components/WorkoutItem";
 import data from "../data.json";
 import { Workout } from "../types/data";
 
 const HomeScreen = ({ navigation }: NativeStackHeaderProps) => {
-  const renderItem = ({ item }: { item: Workout }) => (
-    <View>
-      <Text>{item.name}</Text>
-      <Text>{item.difficulty}</Text>
-    </View>
-  );
-
   return (
     <View style={styles.container}>
       <FlatList
-        data={data as Array<Workout>}
+        data={data as Workout[]}
         keyExtractor={(item) => item.slug}
-        renderItem={renderItem}
+        renderItem={WorkoutItem}
       />
     </View>
   );
