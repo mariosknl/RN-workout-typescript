@@ -1,15 +1,22 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import data from "../data.json";
+import { Workout } from "../types/data";
 
 const HomeScreen = ({ navigation }: NativeStackHeaderProps) => {
-  return (
+  const renderItem = ({ item }: { item: Workout }) => (
     <View>
-      <Text>HomeScreen</Text>
-      <Button
-        title="Go to Planner"
-        onPress={() => {
-          navigation.navigate("Planner");
-        }}
+      <Text>{item.name}</Text>
+      <Text>{item.difficulty}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={data as Array<Workout>}
+        keyExtractor={(item) => item.slug}
+        renderItem={renderItem}
       />
     </View>
   );
@@ -17,4 +24,8 @@ const HomeScreen = ({ navigation }: NativeStackHeaderProps) => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+});
