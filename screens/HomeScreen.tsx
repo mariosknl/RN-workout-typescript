@@ -28,6 +28,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
     fontWeight: "bold",
-    fontFamily: "montserrat-bold",
   },
 });
