@@ -1,19 +1,26 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import WorkoutItem from "../components/WorkoutItem";
-import data from "../data.json";
-import { Workout } from "../types/data";
+import { useWorkouts } from "../hooks/useWorkouts";
 
 const HomeScreen = ({ navigation }: NativeStackHeaderProps) => {
+  const workouts = useWorkouts();
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>New Workouts</Text>
       <FlatList
-        data={data as Workout[]}
+        data={workouts}
         keyExtractor={(item) => item.slug}
         renderItem={({ item }) => {
           return (
-            <Pressable onPress={() => navigation.navigate("WorkoutDetail")}>
+            <Pressable
+              onPress={() =>
+                navigation.navigate("WorkoutDetail", {
+                  slug: item.slug,
+                })
+              }
+            >
               <WorkoutItem item={item} />
             </Pressable>
           );
