@@ -1,5 +1,6 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import { PressableText } from "../components/styled/PressableText";
 import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
 
@@ -14,6 +15,7 @@ type DetailParams = {
 type Navigation = NativeStackHeaderProps & DetailParams;
 
 const WorkoutDetailScreen = ({ route }: Navigation) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const workout = useWorkoutBySlug(route.params.slug);
 
   return (
@@ -21,8 +23,21 @@ const WorkoutDetailScreen = ({ route }: Navigation) => {
       <Text style={styles.header}>Slug - {workout?.name}</Text>
       <PressableText
         text="Check Sequence"
-        onPress={() => Alert.alert("Modal")}
+        onPress={() => {
+          setIsModalVisible(true);
+        }}
       />
+      <Modal visible={isModalVisible} animationType="slide">
+        <View style={styles.centeredView}>
+          <Text>Hello There!</Text>
+          <PressableText
+            text="Close"
+            onPress={() => {
+              setIsModalVisible(false);
+            }}
+          />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -38,5 +53,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
     fontWeight: "bold",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
