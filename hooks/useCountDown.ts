@@ -1,24 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function useCountDown(idx: number, initialCount: number) {
   const [countDown, setCountDown] = useState(initialCount);
 
+  const intervalRef = useRef<number>();
+
   useEffect(() => {
     if (idx === -1) return;
 
-    const intervalId = window.setInterval(() => {
+    intervalRef.current = window.setInterval(() => {
       setCountDown((count) => {
         console.log(count);
         return count - 1;
       });
-    }, 1000);
+    }, 50);
 
-    return () => window.clearInterval(intervalId);
+    return cleanup;
   }, [idx]);
 
   useEffect(() => {
     setCountDown(initialCount);
   }, [initialCount]);
+
+  useEffect(() => {
+    if (countDown === 0) {
+      cleanup();
+    }
+  }, [countDown]);
+
+  const cleanup = () => {
+    if (intervalRef.current) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+  };
 
   return countDown;
 }
