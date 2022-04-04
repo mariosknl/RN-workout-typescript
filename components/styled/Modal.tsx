@@ -13,7 +13,7 @@ export function Modal({ activator: Activator, children }: ModalProps) {
     <View>
       <DefaultModal visible={isModalVisible} animationType="slide">
         <View style={styles.centeredView}>
-          {children}
+          <View style={styles.contentView}>{children}</View>
           <PressableText
             text="Close"
             onPress={() => {
@@ -41,5 +41,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  contentView: {
+    marginBottom: 20,
   },
 });

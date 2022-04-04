@@ -1,3 +1,4 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { StyleSheet, Text, View } from "react-native";
 import { Modal } from "../components/styled/Modal";
@@ -28,9 +29,15 @@ const WorkoutDetailScreen = ({ route }: Navigation) => {
       >
         <View>
           {workout?.sequence.map((exercise, index) => (
-            <Text key={index}>
-              {exercise.name} | {exercise.type} | {formatSec(exercise.duration)}
-            </Text>
+            <View key={index} style={styles.sequenceItem}>
+              <Text>
+                {exercise.name} | {exercise.type} |{" "}
+                {formatSec(exercise.duration)}
+              </Text>
+              {index !== workout.sequence.length - 1 && (
+                <FontAwesome name="arrow-down" size={20} />
+              )}
+            </View>
           ))}
         </View>
       </Modal>
@@ -49,5 +56,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
     fontWeight: "bold",
+  },
+  sequenceItem: {
+    alignItems: "center",
   },
 });
