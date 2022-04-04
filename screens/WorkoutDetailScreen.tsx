@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Modal } from "../components/styled/Modal";
 import { PressableText } from "../components/styled/PressableText";
 import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
+import { formatSec } from "../utils/time";
 
 type DetailParams = {
   route: {
@@ -25,7 +26,13 @@ const WorkoutDetailScreen = ({ route }: Navigation) => {
           <PressableText text="Check Sequence" onPress={handleOpen} />
         )}
       >
-        <Text>Hello There!!!!!!</Text>
+        <View>
+          {workout?.sequence.map((exercise, index) => (
+            <Text key={index}>
+              {exercise.name} | {exercise.type} | {formatSec(exercise.duration)}
+            </Text>
+          ))}
+        </View>
       </Modal>
     </View>
   );
